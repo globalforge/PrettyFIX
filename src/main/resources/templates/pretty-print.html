@@ -26,7 +26,25 @@
 						<label for="name">Enter a raw FIX message:</label>
 						<br><br>
 						<textarea id="inputFIX" name="inputFIX" class=text-input th:field="${prettyFixData.inputFIX}"></textarea>
-    					<button type="submit">Submit</button>
+						<p></p>
+						<div class="">
+				            <div class="">
+				                <input type="radio" id="option1" name="option1" class="" value="0" th:field="${prettyFixData.sortOption}">
+				                <label class="option-label" for="option1">Sort By Position</label>
+				            </div>
+				            <div class="">
+				                <input type="radio" id="option2" name="option2" class="" value="1" th:field="${prettyFixData.sortOption}">
+				                <label class="option-label" for="option2">Sort By Tag Number</label>
+				            </div>
+				            <!--
+				            <div class="">
+				                <input type="radio" id="option3" name="option3" class="" value="2" th:field="${prettyFixData.sortOption}">
+				                <label class="option-label" for="option3">Sort By Tag Name</label>
+				            </div>
+				            -->
+						</div>
+						<p></p>
+    					<button type="submit" class="button">Submit</button>
     					<h1>Result:</h1>
     					<div th:if="${not #strings.isEmpty(prettyFixData.outputFIX)}">
         					<p th:utext="${prettyFixData.outputFIX}" class="textblock"></p>

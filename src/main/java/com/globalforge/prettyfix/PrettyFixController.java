@@ -1,12 +1,17 @@
 package com.globalforge.prettyfix;
 
+import java.util.Comparator;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.unbescape.html.HtmlEscape;
 
 import com.globalforge.infix.FixMessageMgr;
+import com.globalforge.infix.api.InfixFieldInfo;
+import com.globalforge.infix.api.InfixFieldInfoNameComparator;
+import com.globalforge.infix.api.InfixFieldInfoPosComparator;
+import com.globalforge.infix.api.InfixFieldInfoValComparator;
 
 /**
  * 
@@ -41,7 +46,20 @@ public class PrettyFixController {
 		String displayString = "Error";
 		try {
 			msgMgr = new FixMessageMgr(properFix);
-			displayString = msgMgr.getInfixMap().toDisplayString();
+			Comparator<InfixFieldInfo> fieldComparator =  new InfixFieldInfoPosComparator();
+			int sortOption = data.getSortOption();
+			switch (sortOption) {
+			   case 0:
+			      fieldComparator = new InfixFieldInfoPosComparator();
+			      break;
+			   case 1:
+			      fieldComparator = new InfixFieldInfoValComparator();
+               break;
+			   case 2:
+            default:
+               break;
+			}
+			displayString = msgMgr.getInfixMap().toDisplayString(fieldComparator);
 			displayString = displayString.replace( "(", "&nbsp(" );
 			displayString = displayString.replace( "=", "&nbsp=&nbsp" );
 			displayString = displayString.replace( "\n", "<br/>" );
