@@ -56,6 +56,8 @@ public class PrettyFixController {
 			      fieldComparator = new InfixFieldInfoValComparator();
                break;
 			   case 2:
+			      fieldComparator = new InfixFieldInfoNameComparator();
+               break;
             default:
                break;
 			}
