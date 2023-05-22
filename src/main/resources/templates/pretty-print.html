@@ -29,7 +29,7 @@
     					<button type="submit">Submit</button>
     					<h1>Result:</h1>
     					<div th:if="${not #strings.isEmpty(prettyFixData.outputFIX)}">
-        					<p th:utext="${prettyFixData.outputFIX}"></p>
+        					<p th:utext="${prettyFixData.outputFIX}" class="textblock"></p>
     					</div>
     				</form>
 				</div>
