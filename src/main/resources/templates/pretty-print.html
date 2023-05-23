@@ -23,7 +23,7 @@
 			<div>
 				<div>
     				<form method="POST" th:action="@{/pretty-print}" th:object="${prettyFixData}">
-						<label for="name">Enter a raw FIX message:</label>
+						<label class="option-label">Paste a FIX message:</label>
 						<br><br>
 						<textarea id="inputFIX" name="inputFIX" class=text-input th:field="${prettyFixData.inputFIX}"></textarea>
 						<p></p>
@@ -43,7 +43,7 @@
 						</div>
 						<p></p>
     					<button type="submit" class="button">Submit</button>
-    					<h1>Result:</h1>
+    					<h1 class="center">Result:</h1>
     					<div th:if="${not #strings.isEmpty(prettyFixData.outputFIX)}">
         					<p th:utext="${prettyFixData.outputFIX}" class="textblock"></p>
     					</div>
