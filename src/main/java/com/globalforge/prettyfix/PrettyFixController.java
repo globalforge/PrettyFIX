@@ -14,64 +14,63 @@ import com.globalforge.infix.api.InfixFieldInfoPosComparator;
 import com.globalforge.infix.api.InfixFieldInfoValComparator;
 
 /**
- * 
  * @author mstarkie
- *
  */
-
 @Controller
 public class PrettyFixController {
+   /**
+    * This method is called when when the pretty-print.html page is first
+    * loaded.
+    * 
+    * @param data
+    * @return
+    */
+   @GetMapping({ "/" })
+   public ModelAndView loadHomePage(PrettyFixData data) {
+      ModelAndView mav = new ModelAndView("pretty-print"); // thymeleaf template
+      return mav;
+   }
 
-	/**
-	 * This method is called when when the pretty-print.html page is first loaded.
-	 * 
-	 * @param data
-	 * @return
-	 */
-	@GetMapping({ "/" })
-	public ModelAndView loadHomePage(PrettyFixData data) {
-		ModelAndView mav = new ModelAndView("pretty-print"); // thymeleaf template
-		return mav;
-	}
-
-	/**
-	 * This method is called when the user hits the submit button.
-	 * @param data Contains the raw fix entered by user in the text area
-	 * @return the prettified fix returned by the infix engine.
-	 */
-	@PostMapping({ "/pretty-print" })
-	public ModelAndView getPrettyFix(PrettyFixData data) {
-		String properFix = data.getInputFIX().replaceAll("\\^A", "\u0001");
-		FixMessageMgr msgMgr;
-		String displayString = "Error";
-		try {
-			msgMgr = new FixMessageMgr(properFix);
-			Comparator<InfixFieldInfo> fieldComparator =  new InfixFieldInfoPosComparator();
-			int sortOption = data.getSortOption();
-			switch (sortOption) {
-			   case 0:
-			      fieldComparator = new InfixFieldInfoPosComparator();
-			      break;
-			   case 1:
-			      fieldComparator = new InfixFieldInfoValComparator();
+   /**
+    * This method is called when the user hits the submit button.
+    * 
+    * @param data Contains the raw fix entered by user in the text area
+    * @return the prettified fix returned by the infix engine.
+    */
+   @PostMapping({ "/pretty-print" })
+   public ModelAndView getPrettyFix(PrettyFixData data) {
+      String fixInput = data.getInputFIX();
+      fixInput = data.getInputFIX().replaceAll("\\r\\n|\\r|\\n", "");
+      fixInput = fixInput.replaceAll("\\^A", "\u0001");
+      FixMessageMgr msgMgr;
+      String displayString = "Error";
+      try {
+         msgMgr = new FixMessageMgr(fixInput);
+         Comparator<InfixFieldInfo> fieldComparator = new InfixFieldInfoPosComparator();
+         int sortOption = data.getSortOption();
+         switch (sortOption) {
+            case 0:
+               fieldComparator = new InfixFieldInfoPosComparator();
                break;
-			   case 2:
-			      fieldComparator = new InfixFieldInfoNameComparator();
+            case 1:
+               fieldComparator = new InfixFieldInfoValComparator();
+               break;
+            case 2:
+               fieldComparator = new InfixFieldInfoNameComparator();
                break;
             default:
                break;
-			}
-			displayString = msgMgr.getInfixMap().toDisplayString(fieldComparator);
-			displayString = displayString.replace( "(", "&nbsp(" );
-			displayString = displayString.replace( "=", "&nbsp=&nbsp" );
-			displayString = displayString.replace( "\n", "<br/>" );
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		ModelAndView mav = new ModelAndView("pretty-print"); // pretty-print.html
-		data.setOutputFIX(displayString);
-		mav.addObject("outputFIX", data);
-		return mav;
-	}
+         }
+         displayString = msgMgr.getInfixMap().toDisplayString(fieldComparator);
+         displayString = displayString.replace("(", "&nbsp(");
+         displayString = displayString.replace("=", "&nbsp=&nbsp");
+         displayString = displayString.replace("\n", "<br/>");
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      ModelAndView mav = new ModelAndView("pretty-print"); // pretty-print.html
+      data.setOutputFIX(displayString);
+      mav.addObject("outputFIX", data);
+      return mav;
+   }
 }
