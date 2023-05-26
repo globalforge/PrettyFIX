@@ -25,6 +25,9 @@
 				<div>
     				<form method="POST" th:action="@{/pretty-print}" th:object="${prettyFixData}">
 						<label class="option-label">Paste a FIX message:</label>
+						<br>
+						<br>Begin with 8=FIX.*.* and end with 10=***
+						<br>(^A, | or \u0001 (SOH) field delimiters only)
 						<br><br>
 						<textarea id="inputFIX" name="inputFIX" class=text-input th:field="${prettyFixData.inputFIX}"></textarea>
 						<p></p>
@@ -54,7 +57,7 @@
 				            </div>
 				            <div class="">
 				                <input type="radio" id="option2" name="option2" class="" value="1" th:field="${prettyFixData.customDictionary}">
-				                <label class="option-desc" for="option2">Example</label>
+				                <label class="option-desc" for="option2">Fidessa</label>
 				            </div>
 						</div>
 						<p></p>
@@ -64,7 +67,7 @@
         					<p th:utext="${prettyFixData.outputFIX}" class="textblock"></p>
     					</div>
     					<div id="credits">
-								Questions/Comments: <a href = "mailto: michael.starkie@cantor.com">Michael Starkie</a>
+								Questions/Comments: <a href = "mailto: michael.starkie@cantor.com?PrettyFIX Question">Michael Starkie</a>
 						</div>
     				</form>
 				</div>

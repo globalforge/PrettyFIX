@@ -3,7 +3,6 @@ package com.globalforge.prettyfix;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +22,7 @@ import com.globalforge.infix.qfix.FixRepeatingGroup;
  */
 @Controller
 public class PrettyFixController {
-
 	public PrettyFixController() {
-
 	}
 
 	/**
@@ -124,8 +121,8 @@ public class PrettyFixController {
 	private String getCustomTag8(String fixMessage, int customDictOption) {
 		String returnMsg = fixMessage;
 		switch (customDictOption) {
-		case 1:
-			// returnMsg = fixMessage.replaceFirst("8=FIX.+?\u0001", "8=FIX.4.2Fid\u0001");
+		case 1: 
+			returnMsg = fixMessage.replaceFirst("8=FIX.+?\u0001", "8=FIX.4.2Fid\u0001");
 			break;
 		default:
 			break;
@@ -135,8 +132,10 @@ public class PrettyFixController {
 
 	public String replaceControlChars(String fixMessage) {
 		String returnMsg = fixMessage;
+		returnMsg = returnMsg.replaceFirst("^.+?8=FIX", "8=FIX");
 		returnMsg = returnMsg.replaceAll("\\r\\n|\\r|\\n", "");
 		returnMsg = returnMsg.replaceAll("\\^A", "\u0001");
+		returnMsg = returnMsg.replaceAll("\\|", "\u0001");
 		return returnMsg;
 	}
 
@@ -144,6 +143,7 @@ public class PrettyFixController {
 		String testMsg = "8=FIX.4.2^A9=0059^A35=0^A49=CANTORINTL^A56=FLEXASIA^A34=460^A52=20230525-04:06:44^A10=035^A";
 		testMsg = testMsg.replaceAll("\\r\\n|\\r|\\n", "");
 		testMsg = testMsg.replaceAll("\\^A", "\u0001");
+
 		testMsg = testMsg.replaceFirst("8=FIX.+?\u0001", "8=FIX.4.4Fid\u0001");
 		System.out.println(testMsg);
 	}
