@@ -13,4 +13,6 @@ public class PrettyFixData {
 	private String inputFIX;
 	private String outputFIX;
 	private int sortOption;
+	private int customDictionary;
 }
+

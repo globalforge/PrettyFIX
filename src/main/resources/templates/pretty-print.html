@@ -18,6 +18,7 @@
 	<main role="main" class="container">
     	<div class="header">
 			<h1>Convert a FIX Message Into Something More Readable</h1>
+			<h3>(Non standard FIX messages will likely display repeating groups improperly)</h3>
     	</div>
     	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
 			<div>
@@ -27,18 +28,33 @@
 						<br><br>
 						<textarea id="inputFIX" name="inputFIX" class=text-input th:field="${prettyFixData.inputFIX}"></textarea>
 						<p></p>
+						<label class="option-label">Sort order:</label>
+						<p>
 						<div class="">
 				            <div class="">
 				                <input type="radio" id="option1" name="option1" class="" value="0" th:field="${prettyFixData.sortOption}">
-				                <label class="option-label" for="option1">Sort By Position</label>
+				                <label class="option-desc" for="option1">Position</label>
 				            </div>
 				            <div class="">
 				                <input type="radio" id="option2" name="option2" class="" value="1" th:field="${prettyFixData.sortOption}">
-				                <label class="option-label" for="option2">Sort By Tag Number</label>
+				                <label class="option-desc" for="option2">Tag Number</label>
 				            </div>
 				            <div class="">
 				                <input type="radio" id="option3" name="option3" class="" value="2" th:field="${prettyFixData.sortOption}">
-				                <label class="option-label" for="option3">Sort By Tag Name</label>
+				                <label class="option-desc" for="option3">Tag Name</label>
+				            </div>
+						</div>
+						<p></p>
+						<label class="option-label">Custom Dictionary:</label>
+						<p>
+						<div class="">
+				            <div class="">
+				                <input type="radio" id="option1" name="option1" class="" value="0" th:field="${prettyFixData.customDictionary}">
+				                <label class="option-desc" for="option1">None</label>
+				            </div>
+				            <div class="">
+				                <input type="radio" id="option2" name="option2" class="" value="1" th:field="${prettyFixData.customDictionary}">
+				                <label class="option-desc" for="option2">Example</label>
 				            </div>
 						</div>
 						<p></p>
@@ -47,6 +63,9 @@
     					<div th:if="${not #strings.isEmpty(prettyFixData.outputFIX)}">
         					<p th:utext="${prettyFixData.outputFIX}" class="textblock"></p>
     					</div>
+    					<div id="credits">
+								Questions/Comments: <a href = "mailto: michael.starkie@cantor.com">Michael Starkie</a>
+						</div>
     				</form>
 				</div>
 			</div>

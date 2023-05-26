@@ -23,6 +23,17 @@ h1 {
 	font-weight: bold;
 }
 
+.center-div {
+  	margin: auto;
+  	width: 100%;
+  	padding: 10px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0 0 -50px;
+}
+
 h2 {
 	color:  #0d6efd;
 }
@@ -36,6 +47,11 @@ h2 {
 .option-label {
     font-size: 1.25em;
     font-weight: bold;
+	color: #000;
+}
+
+.option-desc {
+    font-size: 1.25em;
 	color: #000;
 }
 
@@ -98,4 +114,12 @@ h2 {
 	border: 3px solid #000000;
 	padding: 8px;
 	margin: 16px;
+}
+
+#credits {
+	font-size: 1.00em;
+    font-weight: bold;
+    color: green;
+    margin: 0 auto;
+    text-align: center;
 }
