@@ -71,6 +71,7 @@ public class PrettyFixController {
 			List<FixData> listFdd = msgMgr.getFixData();
 			displayString = "";
 			Collections.sort(listFdd, fieldComparator);
+			data.setFixData(listFdd);
 			String tab = "";
 			FixRepeatingGroup group = null;
 			boolean inGroup = false;
@@ -88,8 +89,6 @@ public class PrettyFixController {
 						tab = "&nbsp&nbsp&nbsp&nbsp";
 						if (tagNum.equals(group.getDelimiter())) {
 							isDelimiter = true;
-						} else {
-							isDelimiter = false;
 						}
 					} else {
 						inGroup = false;
@@ -100,6 +99,7 @@ public class PrettyFixController {
 					displayString += tab;
 					displayString += "------------\n";
 				}
+				isDelimiter = false;
 				displayString += tab;
 				displayString += fdd.getTagNum();
 				displayString += (fdd.getTagName().isEmpty() ? "" : (" (" + fdd.getTagName() + ")"));
@@ -121,7 +121,7 @@ public class PrettyFixController {
 	private String getCustomTag8(String fixMessage, int customDictOption) {
 		String returnMsg = fixMessage;
 		switch (customDictOption) {
-		case 1: 
+		case 1: // Fidessa
 			returnMsg = fixMessage.replaceFirst("8=FIX.+?\u0001", "8=FIX.4.2Fid\u0001");
 			break;
 		default:
@@ -143,7 +143,6 @@ public class PrettyFixController {
 		String testMsg = "8=FIX.4.2^A9=0059^A35=0^A49=CANTORINTL^A56=FLEXASIA^A34=460^A52=20230525-04:06:44^A10=035^A";
 		testMsg = testMsg.replaceAll("\\r\\n|\\r|\\n", "");
 		testMsg = testMsg.replaceAll("\\^A", "\u0001");
-
 		testMsg = testMsg.replaceFirst("8=FIX.+?\u0001", "8=FIX.4.4Fid\u0001");
 		System.out.println(testMsg);
 	}

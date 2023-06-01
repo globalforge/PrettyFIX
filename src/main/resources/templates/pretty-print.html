@@ -8,71 +8,156 @@
  *       Fragment Expressions: ~{...}
  -->
 <html xmlns="http://www.thymeleaf.org">
-	<head>
-		<meta charset="utf-8">
-		<Title>PrettyFIX</Title>
-		<link rel="stylesheet" th:href="@{webjars/bootstrap/5.1.0/css/bootstrap.min.css}"/>
-    	<link rel="stylesheet" th:href="@{/css/main.css}"/>
-  	</head>
-  	<body>
+
+<head>
+	<meta charset="utf-8">
+	<Title>PrettyFIX</Title>
+	<link rel="stylesheet" th:href="@{webjars/bootstrap/5.1.0/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<script type="text/javascript">
+	function tableToCSV() {
+
+		// Variable to store the final csv data
+		var csv_data = [];
+
+		// Get each row data
+		var rows = document.getElementsByTagName('tr');
+		for (var i = 0; i < rows.length; i++) {
+
+			// Get each column data
+			var cols = rows[i].querySelectorAll('td,th');
+
+			// Stores each csv row data
+			var csvrow = [];
+			for (var j = 0; j < cols.length; j++) {
+
+				// Get the text data of each cell
+				// of a row and push it to csvrow
+				csvrow.push(cols[j].innerHTML);
+			}
+
+			// Combine each column value with comma
+			csv_data.push(csvrow.join(","));
+		}
+
+		// Combine each row data with new line character
+		csv_data = csv_data.join('\n');
+
+		// Call this function to download csv file 
+		downloadCSVFile(csv_data);
+
+	}
+
+	function downloadCSVFile(csv_data) {
+
+		// Create CSV file object and feed
+		// our csv_data into it
+		CSVFile = new Blob([csv_data], {
+			type: "text/csv"
+		});
+
+		// Create to temporary link to initiate
+		// download process
+		var temp_link = document.createElement('a');
+
+		// Download csv file
+		temp_link.download = "prettyFix.csv";
+		var url = window.URL.createObjectURL(CSVFile);
+		temp_link.href = url;
+
+		// This link should not be displayed
+		temp_link.style.display = "none";
+		document.body.appendChild(temp_link);
+
+		// Automatically click the link to
+		// trigger download
+		temp_link.click();
+		document.body.removeChild(temp_link);
+	}
+</script>
+
+<body>
 	<main role="main" class="container">
-    	<div class="header">
+		<div class="header">
 			<h1>Convert a FIX Message Into Something More Readable</h1>
-			<h3>(Non standard FIX messages will likely display repeating groups improperly)</h3>
-    	</div>
-    	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+			<h3>(Non standard FIX messages will likely display repeating
+				groups improperly)</h3>
+		</div>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
 			<div>
 				<div>
-    				<form method="POST" th:action="@{/pretty-print}" th:object="${prettyFixData}">
-						<label class="option-label">Paste a FIX message:</label>
-						<br>
-						<br>Begin with 8=FIX.*.* and end with 10=***
-						<br>(^A, | or \u0001 (SOH) field delimiters only)
-						<br><br>
-						<textarea id="inputFIX" name="inputFIX" class=text-input th:field="${prettyFixData.inputFIX}"></textarea>
+					<form method="POST" th:action="@{/pretty-print}" th:object="${prettyFixData}">
+						<label class="option-label">Paste a FIX message:</label> <br>
+						<br>Begin with 8=FIX.*.* and end with 10=*** <br>(^A, |
+						or \u0001 (SOH) field delimiters only) <br> <br>
+						<textarea id="inputFIX" name="inputFIX" class=text-input
+							th:field="${prettyFixData.inputFIX}"></textarea>
 						<p></p>
 						<label class="option-label">Sort order:</label>
 						<p>
 						<div class="">
-				            <div class="">
-				                <input type="radio" id="option1" name="option1" class="" value="0" th:field="${prettyFixData.sortOption}">
-				                <label class="option-desc" for="option1">Position</label>
-				            </div>
-				            <div class="">
-				                <input type="radio" id="option2" name="option2" class="" value="1" th:field="${prettyFixData.sortOption}">
-				                <label class="option-desc" for="option2">Tag Number</label>
-				            </div>
-				            <div class="">
-				                <input type="radio" id="option3" name="option3" class="" value="2" th:field="${prettyFixData.sortOption}">
-				                <label class="option-desc" for="option3">Tag Name</label>
-				            </div>
+							<div class="">
+								<input type="radio" id="option1" name="option1" class="" value="0"
+									th:field="${prettyFixData.sortOption}"> <label class="option-desc"
+									for="option1">Position</label>
+							</div>
+							<div class="">
+								<input type="radio" id="option2" name="option2" class="" value="1"
+									th:field="${prettyFixData.sortOption}"> <label class="option-desc" for="option2">Tag
+									Number</label>
+							</div>
+							<div class="">
+								<input type="radio" id="option3" name="option3" class="" value="2"
+									th:field="${prettyFixData.sortOption}"> <label class="option-desc" for="option3">Tag
+									Name</label>
+							</div>
 						</div>
 						<p></p>
 						<label class="option-label">Custom Dictionary:</label>
 						<p>
 						<div class="">
-				            <div class="">
-				                <input type="radio" id="option1" name="option1" class="" value="0" th:field="${prettyFixData.customDictionary}">
-				                <label class="option-desc" for="option1">None</label>
-				            </div>
-				            <div class="">
-				                <input type="radio" id="option2" name="option2" class="" value="1" th:field="${prettyFixData.customDictionary}">
-				                <label class="option-desc" for="option2">Fidessa</label>
-				            </div>
+							<div class="">
+								<input type="radio" id="option1" name="option1" class="" value="0"
+									th:field="${prettyFixData.customDictionary}">
+								<label class="option-desc" for="option1">None</label>
+							</div>
+							<div class="">
+								<input type="radio" id="option2" name="option2" class="" value="1"
+									th:field="${prettyFixData.customDictionary}">
+								<label class="option-desc" for="option2">Fidessa</label>
+							</div>
 						</div>
 						<p></p>
-    					<button type="submit" class="button">Submit</button>
-    					<h1 class="center">Result:</h1>
-    					<div th:if="${not #strings.isEmpty(prettyFixData.outputFIX)}">
-        					<p th:utext="${prettyFixData.outputFIX}" class="textblock"></p>
-    					</div>
-    					<div id="credits">
-								Questions/Comments: <a href = "mailto: michael.starkie@cantor.com?PrettyFIX Question">Michael Starkie</a>
+						<button type="submit" class="button">Submit</button>
+						<h1 class="center">Text Result:</h1>
+						<div th:if="${not #strings.isEmpty(prettyFixData.outputFIX)}">
+							<p th:utext="${prettyFixData.outputFIX}" class="textblock"></p>
 						</div>
-    				</form>
+						<h1 class="center">Tabular Result:</h1>
+						<table class="center">
+							<tr>
+								<th class="red">Tag Number</th>
+								<th class="red">Tag Name</th>
+								<th class="red">Tag Value</th>
+								<th class="red">Tag Value Definition</th>
+							</tr>
+							<tr th:each="data : ${prettyFixData.fixData}">
+								<td th:text="${data.tagNum}">Tag Number</td>
+								<td th:text="${data.tagName}">Tag Name</td>
+								<td th:text="${data.tagVal}">Tag Value</td>
+								<td th:text="${data.tagDef}">Tag Value Definition</td>
+							</tr>
+						</table>
+						<br>
+						<br>
+						<button type="submit" onclick="tableToCSV()" class="button">Save
+							Result as CSV</button>
+					</form>
 				</div>
 			</div>
 		</nav>
-   	</main>
-  	</body>
+	</main>
+</body>
+
 </html>
