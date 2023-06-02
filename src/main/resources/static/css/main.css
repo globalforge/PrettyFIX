@@ -17,7 +17,9 @@ h1 {
 	text-align: center;
 }
 
-table, th, td {
+table,
+th,
+td {
 	font-family: "Lucida Sans Typewriter", monospace;
 	font-size: 15px;
 	border: 2px solid black;
