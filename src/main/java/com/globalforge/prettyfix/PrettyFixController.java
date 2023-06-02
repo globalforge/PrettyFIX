@@ -25,6 +25,7 @@ import com.globalforge.infix.qfix.FixRepeatingGroup;
 @Controller
 public class PrettyFixController {
    public static String TAB = "&nbsp";
+
    public PrettyFixController() {
    }
 
@@ -80,35 +81,45 @@ public class PrettyFixController {
          for (FixData fdd : listFdd) {
             String tagNum = fdd.getTagNum();
             FixRepeatingGroup group = grpMgr.getGroup(tagNum);
+            // start of repeating group.
             if (group != null) {
+               // display as regular tag but push the group onto the stack so next fields (group members) will be indented.
                displayString += getDisplayText(fdd, curGroup.size(), sortOption);
                curGroup.push(tagNum);
                continue;
             }
             if (curGroup.isEmpty()) {
+               // the case when we receive a regular field (not part of any group)
                displayString += getDisplayText(fdd, curGroup.size(), sortOption);
                continue;
             }
+            // we are inside a repeating group here
             String curGoupTagNum = curGroup.peek();
             group = grpMgr.getGroup(curGoupTagNum);
             if (tagNum.equals(group.getDelimiter())) {
+               // display a line separating the repeating tags.
                displayString += getDelimiterLine(curGroup.size(), sortOption);
             }
             if (group.containsMember(tagNum)) {
+               // indent the line, the number of tabs is determined by how deep the nesting is.
                displayString += getDisplayText(fdd, curGroup.size(), sortOption);
                continue;
             } else {
                boolean found = false;
+               // coming out of repeating group.
                while (!found && curGroup.size() > 0) {
                   curGoupTagNum = curGroup.peek();
                   group = grpMgr.getGroup(curGoupTagNum);
+                  // nested groups and the current tags belongs to on outer group.
                   if (group != null && group.containsMember(tagNum)) {
-                     found = true;;
+                     found = true;
                   } else {
+                     // not part of the current nested group so pop stack and check the outer group.
                      curGroup.pop();
                   }
                }
                if (tagNum.equals(group.getDelimiter())) {
+                  // always display a line before displaying the first tag in the set of repeating tags.
                   displayString += getDelimiterLine(curGroup.size(), sortOption);
                }
                displayString += getDisplayText(fdd, curGroup.size(), sortOption);
@@ -152,7 +163,7 @@ public class PrettyFixController {
       for (int i = 0; i < nestingLevel; i++) {
          displayString += TAB;
       }
-      displayString += "------------\n";
+      displayString += "------------------------------------\n";
       return displayString;
    }
 
