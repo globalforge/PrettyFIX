@@ -24,7 +24,7 @@ import com.globalforge.infix.qfix.FixRepeatingGroup;
  */
 @Controller
 public class PrettyFixController {
-   public static String TAB = "&nbsp&nbsp";
+   public static String TAB = "&nbsp";
    public PrettyFixController() {
    }
 
