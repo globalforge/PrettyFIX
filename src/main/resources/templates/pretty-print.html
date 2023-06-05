@@ -95,38 +95,48 @@
 							th:field="${prettyFixData.inputFIX}"></textarea>
 						<p></p>
 						<label class="option-label">Sort order:</label>
-						<p>
 						<div class="">
 							<div class="">
-								<input type="radio" id="option1" name="option1" class="" value="0"
-									th:field="${prettyFixData.sortOption}"> <label class="option-desc"
-									for="option1">Position</label>
+								<input type="radio" id="option1" name="option" class="" value="0"
+									th:field="${prettyFixData.sortOption}"> 
+									<label class="option-desc" for="option1">Position</label>
 							</div>
 							<div class="">
-								<input type="radio" id="option2" name="option2" class="" value="1"
-									th:field="${prettyFixData.sortOption}"> <label class="option-desc" for="option2">Tag
-									Number</label>
+								<input type="radio" id="option2" name="option" class="" value="1"
+									th:field="${prettyFixData.sortOption}"> 
+									<label class="option-desc" for="option2">Tag Number</label>
 							</div>
 							<div class="">
-								<input type="radio" id="option3" name="option3" class="" value="2"
-									th:field="${prettyFixData.sortOption}"> <label class="option-desc" for="option3">Tag
-									Name</label>
+								<input type="radio" id="option3" name="option" class="" value="2"
+									th:field="${prettyFixData.sortOption}"> 
+									<label class="option-desc" for="option3">Tag Name</label>
 							</div>
 						</div>
 						<p></p>
-						<label class="option-label">Custom Dictionary:</label>
-						<p>
+						<label class="option-label">Dictionary (this will modify tag 8):</label>
 						<div class="">
 							<div class="">
-								<input type="radio" id="option1" name="option1" class="" value="0"
+								<input type="radio" id="FIX.4.2" name="dict" class="" value="FIX.4.2" checked="checked"
 									th:field="${prettyFixData.customDictionary}">
-								<label class="option-desc" for="option1">None</label>
+								<label class="option-desc" for="FIX.4.2">FIX.4.2</label>
 							</div>
 							<div class="">
-								<input type="radio" id="option2" name="option2" class="" value="1"
+								<input type="radio" id="FIX.4.4" name="dict" class="" value="FIX.4.4"
 									th:field="${prettyFixData.customDictionary}">
-								<label class="option-desc" for="option2">Fidessa</label>
+								<label class="option-desc" for="FIX.4.4">FIX.4.4</label>
 							</div>
+							<div class="">
+								<input type="radio" id="FIX.5.0SP2" name="dict" class="" value="FIX.5.0SP2"
+									th:field="${prettyFixData.customDictionary}">
+								<label class="option-desc" for="FIX.5.0SP2">FIX.5.0</label>
+							</div>
+							<!--
+							<div class="">
+								<input type="radio" id="FIX.4.2Fid" name="dict" class="" value="FIX.4.2Fid"
+									th:field="${prettyFixData.customDictionary}">
+								<label class="option-desc" for="FIX.4.2Fid">Fidessa</label>
+							</div>
+							-->
 						</div>
 						<p></p>
 						<button type="submit" class="button">Submit</button>

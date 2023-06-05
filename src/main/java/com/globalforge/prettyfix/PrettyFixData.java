@@ -15,6 +15,6 @@ public class PrettyFixData {
     private String inputFIX;
     private String outputFIX;
     private int sortOption;
-    private int customDictionary;
+    private String customDictionary = "FIX.4.2";
     private List<FixData> fixData;
 }

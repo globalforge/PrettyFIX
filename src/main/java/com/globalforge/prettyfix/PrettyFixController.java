@@ -173,16 +173,22 @@ public class PrettyFixController {
         return displayString;
     }
 
-    private String getCustomTag8(String fixMessage, int customDictOption) {
+    private String getCustomTag8(String fixMessage, String customDictOption) {
         String returnMsg = fixMessage;
+        returnMsg = fixMessage.replaceFirst("8=.+?\u0001",
+            "8=" + customDictOption + "\u0001");
+        /*-
         switch (customDictOption) {
             case 1: // Fidessa
+                //returnMsg = fixMessage.replaceFirst("8=FIX.+?\u0001",
+                    "//8=FIX.4.2Fid\u0001");
                 returnMsg = fixMessage.replaceFirst("8=FIX.+?\u0001",
                     "8=FIX.4.2Fid\u0001");
                 break;
             default:
                 break;
         }
+        */
         return returnMsg;
     }
 
